@@ -7,7 +7,7 @@ defmodule MyAshPhoenixApp.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -48,7 +48,12 @@ defmodule MyAshPhoenixApp.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:ash, "~> 2.5.10"},
+      {:ash_postgres, "~> 1.3.6"},
+      {:ash_phoenix, "~> 1.1"},
+      # If using ElixirLS then including elixir_sense to enable Ash auto-complete
+      {:elixir_sense, github: "elixir-lsp/elixir_sense", only: [:dev, :test]}
     ]
   end
 
