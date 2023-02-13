@@ -53,7 +53,9 @@ defmodule MyAshPhoenixApp.Blog.PostTest do
 
     ### READ ACTION - read blog post(s) ###
     assert [first_post = %{title: "hello world"}] =
-             MyAshPhoenixApp.Blog.read!(MyAshPhoenixApp.Blog.Post)
+             MyAshPhoenixApp.Blog.Post
+             |> Ash.Query.for_read(:read)
+             |> MyAshPhoenixApp.Blog.read!()
 
     # will return:
     #
@@ -69,6 +71,12 @@ defmodule MyAshPhoenixApp.Blog.PostTest do
     #     ...
     #   >
     # ]
+
+    ### CUSTOM READ ACTION - get by id ###
+    assert %{title: "hello world"} =
+             MyAshPhoenixApp.Blog.Post
+             |> Ash.Query.for_read(:by_id, %{id: first_post.id})
+             |> MyAshPhoenixApp.Blog.read_one!()
 
     ### UPDATE ACTION - update existing blog post ###
     # notice how you have to parse in an existing resource to the changeset

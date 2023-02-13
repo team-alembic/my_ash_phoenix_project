@@ -14,9 +14,24 @@ defmodule MyAshPhoenixApp.Blog.Post do
     repo MyAshPhoenixApp.Repo
   end
 
+  code_interface do
+    define_for MyAshPhoenixApp.Blog
+    define :create, action: :create
+    define :read_all, action: :read
+    define :update, action: :update
+    define :destroy, action: :destroy
+    define :get_by_id, args: [:id], action: :by_id
+  end
+
   actions do
     # Exposes default built in actions to modify the resource
     defaults [:create, :read, :update, :destroy]
+
+    read :by_id do
+      argument :id, :uuid, allow_nil?: false
+      get? true
+      filter expr(id == ^arg(:id))
+    end
   end
 
   # Attributes are the simple pieces of data that exist on your resource
