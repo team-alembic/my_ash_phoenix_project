@@ -2,6 +2,8 @@ defmodule MyAshPhoenixAppWeb.PageController do
   use MyAshPhoenixAppWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    conn
+    |> assign(:posts, MyAshPhoenixApp.Blog.read!(MyAshPhoenixApp.Blog.Post))
+    |> render("index.html")
   end
 end
