@@ -1,7 +1,7 @@
 defmodule MyAshPhoenixApp.Blog do
-  use Ash.Api
+  use Ash.Domain
 
   resources do
-    registry MyAshPhoenixApp.Blog.Registry
+    resource MyAshPhoenixApp.Blog.Post
   end
 end

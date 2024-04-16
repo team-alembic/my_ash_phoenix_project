@@ -1,4 +1,4 @@
-defmodule MyAshPhoenixApp.Repo.Migrations.Install2Extensions do
+defmodule MyAshPhoenixApp.Repo.Migrations.Install2Extensions20240416073435 do
   @moduledoc """
   Installs any extensions that are mentioned in the repo's `installed_extensions/0` callback
 

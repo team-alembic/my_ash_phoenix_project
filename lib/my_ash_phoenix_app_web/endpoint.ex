@@ -7,10 +7,13 @@ defmodule MyAshPhoenixAppWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_my_ash_phoenix_app_key",
-    signing_salt: "lE/SU9Gp"
+    signing_salt: "h7eX9hhQ",
+    same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]],
+    longpoll: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -20,7 +23,7 @@ defmodule MyAshPhoenixAppWeb.Endpoint do
     at: "/",
     from: :my_ash_phoenix_app,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: MyAshPhoenixAppWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
