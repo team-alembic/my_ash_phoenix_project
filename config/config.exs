@@ -7,22 +7,55 @@
 # General application configuration
 import Config
 
-# For backwards compatibility, the following configuration is required.
-# see https://ash-hq.org/docs/guides/ash/latest/get-started#temporary-config for more details
-config :ash, :use_all_identities_in_manage_relationship?, false
+config :my_ash_phoenix_app,
+  ash_domains: [MyAshPhoenixApp.Blog]
+
+config :ash,
+  allow_forbidden_field_for_relationships_by_default?: true,
+  include_embedded_source_by_default?: false,
+  show_keysets_for_all_actions?: false,
+  default_page_type: :keyset,
+  policies: [no_filter_static_forbidden_reads?: false]
+
+config :spark,
+  formatter: [
+    remove_parens?: true,
+    "Ash.Resource": [
+      section_order: [
+        :postgres,
+        :resource,
+        :code_interface,
+        :actions,
+        :policies,
+        :pub_sub,
+        :preparations,
+        :changes,
+        :validations,
+        :multitenancy,
+        :attributes,
+        :relationships,
+        :calculations,
+        :aggregates,
+        :identities
+      ]
+    ],
+    "Ash.Domain": [section_order: [:resources, :policies, :authorization, :domain, :execution]]
+  ]
 
 config :my_ash_phoenix_app,
-  ash_apis: [MyAshPhoenixApp.Blog]
-
-config :my_ash_phoenix_app,
-  ecto_repos: [MyAshPhoenixApp.Repo]
+  ecto_repos: [MyAshPhoenixApp.Repo],
+  generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
 config :my_ash_phoenix_app, MyAshPhoenixAppWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: MyAshPhoenixAppWeb.ErrorView, accepts: ~w(html json), layout: false],
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: MyAshPhoenixAppWeb.ErrorHTML, json: MyAshPhoenixAppWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: MyAshPhoenixApp.PubSub,
-  live_view: [signing_salt: "hZwuyfc5"]
+  live_view: [signing_salt: "Juvchan7"]
 
 # Configures the mailer
 #
@@ -33,17 +66,26 @@ config :my_ash_phoenix_app, MyAshPhoenixAppWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :my_ash_phoenix_app, MyAshPhoenixApp.Mailer, adapter: Swoosh.Adapters.Local
 
-# Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
-
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.29",
-  default: [
+  version: "0.17.11",
+  my_ash_phoenix_app: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.4.3",
+  my_ash_phoenix_app: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger

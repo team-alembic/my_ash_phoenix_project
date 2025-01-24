@@ -1,9 +1,24 @@
 # MyAshPhoenixApp
 
+This repo is the result of following the steps at found at https://hexdocs.pm/ash_phoenix/getting-started-with-ash-and-phoenix.html.
+
+The tutorial gives instructions on 
+  - how to setup your project
+  - creating resources (including how to create and migrate the database)
+  - interacting with your resources
+  - connecting your resource to a Phoenix LiveView
+
+When generating the project during the initial setup one can go to https://ash-hq.org rather than doing it manually. For the purposes of recreating the tutorial it suffices to pick the following installer options:
+
+  * Presets -> Phoenix LiveView
+  * Web -> Phoenix
+  * Data Layers -> PostgreSQL
+
+leaving the other fields unchecked.
+
 To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ash_postgres.setup`
+  * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

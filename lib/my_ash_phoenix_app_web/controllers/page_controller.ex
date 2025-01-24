@@ -1,9 +1,9 @@
 defmodule MyAshPhoenixAppWeb.PageController do
   use MyAshPhoenixAppWeb, :controller
 
-  def index(conn, _params) do
-    conn
-    |> assign(:posts, MyAshPhoenixApp.Blog.read!(MyAshPhoenixApp.Blog.Post))
-    |> render("index.html")
+  def home(conn, _params) do
+    # The home page is often custom made,
+    # so skip the default app layout.
+    render(conn, :home, layout: false)
   end
 end

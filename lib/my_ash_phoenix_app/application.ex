@@ -8,16 +8,17 @@ defmodule MyAshPhoenixApp.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      MyAshPhoenixApp.Repo,
-      # Start the Telemetry supervisor
       MyAshPhoenixAppWeb.Telemetry,
-      # Start the PubSub system
+      MyAshPhoenixApp.Repo,
+      {DNSCluster,
+       query: Application.get_env(:my_ash_phoenix_app, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MyAshPhoenixApp.PubSub},
-      # Start the Endpoint (http/https)
-      MyAshPhoenixAppWeb.Endpoint
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: MyAshPhoenixApp.Finch},
       # Start a worker by calling: MyAshPhoenixApp.Worker.start_link(arg)
-      # {MyAshPhoenixApp.Worker, arg}
+      # {MyAshPhoenixApp.Worker, arg},
+      # Start to serve requests, typically the last entry
+      MyAshPhoenixAppWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

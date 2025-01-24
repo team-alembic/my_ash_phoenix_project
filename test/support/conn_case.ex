@@ -19,15 +19,15 @@ defmodule MyAshPhoenixAppWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint MyAshPhoenixAppWeb.Endpoint
+
+      use MyAshPhoenixAppWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import MyAshPhoenixAppWeb.ConnCase
-
-      alias MyAshPhoenixAppWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint MyAshPhoenixAppWeb.Endpoint
     end
   end
 
