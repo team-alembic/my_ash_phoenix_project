@@ -9,7 +9,7 @@ defmodule MyAshPhoenixApp.Repo.Migrations.InitialMigration do
 
   def up do
     create table(:posts, primary_key: false) do
-      add :id, :uuid, null: false, default: fragment("uuid_generate_v4()"), primary_key: true
+      add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
       add :title, :text, null: false
       add :content, :text
     end
